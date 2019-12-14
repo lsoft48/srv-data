@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#установка пользователя по умолчанию для работы с git репозитарием
+
+git remote -v
+git config remote.origin.url https://lsoft48@github.com/lsoft48/srv-data.git
+git remote -v
