@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd /srv-data
+mkdir docker
+mkdir docker/builds
+mkdir docker/containers
