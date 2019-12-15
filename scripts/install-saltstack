@@ -1,0 +1,23 @@
+#!/bin/bash
+
+. /etc/lsb-release
+
+wget -O - https://repo.saltstack.com/apt/ubuntu/${DISTRIB_RELEASE}/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
+echo "deb http://repo.saltstack.com/apt/ubuntu/${DISTRIB_RELEASE}/amd64/latest ${DISTRIB_CODENAME} main" > /etc/apt/sources.list.d/saltstack.list
+
+apt-get update
+apt-get install -y salt-minion salt-ssh salt-syndic salt-cloud salt-api
+
+#make default minion config
+$SALT=/etc/salt
+if [ -e $SALT/minion ]; then
+    if [ ! -e $SALT/minion.bak ]; then
+	mv $SALT/minion $SALT/minion.bak
+	echo "Backup of 'minion' saved as ${SALT}/minion.bak "
+    fi
+fi
+if [ -e $SALT/minion ]; then
+    echo "Cant' copy minion - already exists"
+else
+    cp ../templates/minion $SALT
+fi
