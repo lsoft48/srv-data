@@ -7,12 +7,12 @@
 
 NET_NAME=$N_NAME
 IFACE=$IFACE
-
-#шлюз - совпадает с хостом
 GW=$GW
 HOST=$HOST
 
+echo "${NET_NAME}:$NET on ${IFACE} connect via ${NET_IFACE} Host=${HOST} gateway=${GW}"
 
+exit
 
 #интерфейс для связи с хостом
 ifconfig ${IFACE}-nds down

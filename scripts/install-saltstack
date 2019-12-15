@@ -6,10 +6,13 @@ wget -O - https://repo.saltstack.com/apt/ubuntu/${DISTRIB_RELEASE}/amd64/latest/
 echo "deb http://repo.saltstack.com/apt/ubuntu/${DISTRIB_RELEASE}/amd64/latest ${DISTRIB_CODENAME} main" > /etc/apt/sources.list.d/saltstack.list
 
 apt-get update
-apt-get install -y salt-minion salt-ssh salt-syndic salt-cloud salt-api
+apt-get install -y salt-minion salt-ssh 
+#salt-cloud
+#salt-api
+#salt-syndic
 
 #make default minion config
-$SALT=/etc/salt
+SALT=/etc/salt
 if [ -e $SALT/minion ]; then
     if [ ! -e $SALT/minion.bak ]; then
 	mv $SALT/minion $SALT/minion.bak
@@ -21,3 +24,6 @@ if [ -e $SALT/minion ]; then
 else
     cp ../templates/minion $SALT
 fi
+
+#restart salt system
+systemctl restart salt-minion
