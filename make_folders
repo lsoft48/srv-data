@@ -1,6 +1,27 @@
 #!/bin/bash
 
+echo "Первоначальное создание структуры серверных папок/скриптов"
+
 cd /srv-data
 mkdir docker
 mkdir docker/builds
 mkdir docker/containers
+
+
+BDS=./docker/builds
+
+#copy defaults config template
+if [ -e $BDS/defaults ]; then
+    if [ ! -e $BDS/defaults.bak ]; then
+	mv $BDS/defaults $BDS/defaults.bak
+	echo "Backup of 'default' saved as ${BDS}/defaults.bak "
+    fi
+fi
+if [ -e $BDS/defaults ]; then
+    echo "Cant' copy defaults - already exists"
+else
+    cp ./templates/defaults $BDS
+fi
+
+ln -s ../../scripts/create_docker_macvlan_net $BDS/create_docker_macvlan_net
+
