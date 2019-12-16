@@ -23,5 +23,9 @@ else
     cp ./templates/defaults $BDS
 fi
 
+#скрипт создания docker - сети
 ln -s ../../scripts/create_docker_macvlan_net $BDS/create_docker_macvlan_net
+
+#шаблон загрузки репозитариев
+cp -n ./templates/bld-images $BDS
 

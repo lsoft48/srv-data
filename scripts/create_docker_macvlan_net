@@ -12,8 +12,6 @@ HOST=$HOST
 
 echo "${NET_NAME}:$NET on ${IFACE} connect via ${NET_IFACE} Host=${HOST} gateway=${GW}"
 
-exit
-
 #интерфейс для связи с хостом
 ifconfig ${IFACE}-nds down
 ip link delete ${IFACE}-nds
@@ -27,16 +25,17 @@ ifconfig ${IFACE}-nds $HOST
 docker network rm ${NET_NAME}
 docker network create --driver=macvlan \
                       --subnet=${NET}.0/24 \
-                      --ip-range=${NET}.240/28 \
+                      --ip-range=${HOST}/28 \
                       -o macvlan_mode=bridge \
                       -o parent=${IFACE} \
                       --gateway=$GW \
                       ${NET_NAME}
+docker network inspect $NET_NAME
 
 #необходимо, что бы работала связь с хостом и выход в интернет.
 #нужно сделать для каждого контейнера
-ip route add 192.168.0.241 dev br0-nds
-ip route add 192.168.0.242 dev br0-nds
+#ip route add 192.168.0.241 dev br0-nds
+#ip route add 192.168.0.242 dev br0-nds
 
 #удалим ненужный интерфейс
 ifconfig docker0 down

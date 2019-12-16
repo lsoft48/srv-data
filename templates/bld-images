@@ -2,15 +2,15 @@
 
 declare -A data
 
-data["samba-dc"] = https://github.com/lsoft48/samba-domain.git
-data["psql"] = https://github.com/lsoft48/psql.git
-data["1c-web"] = https://github.com/lsoft48/1c-web.git
+data["samba-dc"]=https://github.com/lsoft48/samba-domain.git
+data["psql"]=https://github.com/lsoft48/psql.git
+data["1c-web"]=https://github.com/lsoft48/1c-web.git
 
 
 #создаем клоны репозитариев
 for key in ${!data[@]}; do
-    if [ -e ! "$key" ]; then
+    if [ ! -e "$key" ]; then
 	mkdir $key
-	git clone ${data[${key}]}
+	git clone ${data[${key}]} $key
     fi
 done
